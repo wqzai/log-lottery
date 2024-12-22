@@ -7,20 +7,24 @@ export const useGlobalConfig = defineStore('global', {
         return {
             globalConfig: {
                 rowCount: 17,
-                isSHowPrizeList: true,
-                topTitle: '大明内阁六部御前奏对',
+                isSHowPrizeList: false,
+                topTitle: '百色市气象部门迎春联欢晚会幸运抽奖',
                 theme: {
                     name: 'dracula',
                     detail: { primary: '#0f5fd3' },
                     cardColor: '#ff79c6',
                     cardWidth: 140,
                     cardHeight: 200,
-                    textColor: '#ffffff',
-                    luckyCardColor: '#ECB1AC',
+                    textColor: '#ffcc80',
+                    luckyCardColor: '#d81b43',
                     textSize: 30,
-                    patternColor: '#1b66c9',
+                    patternColor: '#fff59c',
                     patternList: defaultPatternList as number[],
-                    background:{}, // 背景颜色或图片
+                    background: {
+                        id: '3',
+                        name: '背景图片',
+                        url: 'https://img.cdn.apipost.cn/upload/user/0/file/2e18d92d-d129-459a-88a7-d71ae96486a8.jpg'
+                    }
                 },
                 musicList: defaultMusicList as IMusic[],
                 imageList: defaultImageList as IImage[],
@@ -213,27 +217,31 @@ export const useGlobalConfig = defineStore('global', {
             this.globalConfig.isSHowPrizeList = isShowPrizeList;
         },
         // 设置背景图片
-        setBackground(background:{}){
+        setBackground(background:any){
             this.globalConfig.theme.background = background
         },
         // 重置所有配置
         reset() {
             this.globalConfig = {
                 rowCount: 17,
-                isSHowPrizeList: true,
-                topTitle: '大明内阁六部御前奏对',
+                isSHowPrizeList: false,
+                topTitle: '百色市气象部门迎春联欢晚会幸运抽奖',
                 theme: {
                     name: 'dracula',
                     detail: { primary: '#0f5fd3' },
                     cardColor: '#ff79c6',
                     cardWidth: 140,
                     cardHeight: 200,
-                    textColor: '#ffffff',
-                    luckyCardColor: '#ECB1AC',
+                    textColor: '#ffcc80',
+                    luckyCardColor: '#d81b43',
                     textSize: 30,
-                    patternColor: '#1b66c9',
+                    patternColor: '#fff59c',
                     patternList: defaultPatternList as number[],
-                    background:{}, // 背景图片
+                    background: {
+                        id: '3',
+                        name: '背景图片',
+                        url: 'https://img.cdn.apipost.cn/upload/user/0/file/2e18d92d-d129-459a-88a7-d71ae96486a8.jpg'
+                    }
                 },
                 musicList: defaultMusicList as IMusic[],
                 imageList: defaultImageList as IImage[],

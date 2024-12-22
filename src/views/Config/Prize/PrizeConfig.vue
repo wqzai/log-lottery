@@ -198,13 +198,13 @@ watch(() => prizeList.value, (val: IPrizeConfig[]) => {
                         <progress class="w-full progress" :value="item.isUsedCount" :max="item.count"></progress>
                     </div>
                 </label>
-                <!-- <label class="w-1/2 max-w-xs mb-10 form-control">
-                    <div class="label">
-                        <span class="label-text">已获奖人数</span>
-                    </div>
-                    <input disabled type="number" v-model="item.isUsedCount" placeholder="获奖人数"
-                        class="w-full max-w-xs input-sm input input-bordered" />
-                </label> -->
+<!--                <label class="w-1/2 max-w-xs mb-10 form-control">-->
+<!--                    <div class="label">-->
+<!--                        <span class="label-text">已获奖人数</span>-->
+<!--                    </div>-->
+<!--                    <input disabled type="number" v-model="item.isUsedCount" placeholder="获奖人数"-->
+<!--                        class="w-full max-w-xs input-sm input input-bordered" />-->
+<!--                </label>-->
                 <label class="w-1/2 max-w-xs mb-10 form-control">
                     <div class="label">
                         <span class="label-text">已抽取</span>
@@ -216,10 +216,10 @@ watch(() => prizeList.value, (val: IPrizeConfig[]) => {
                     <div class="label">
                         <span class="label-text">图片</span>
                     </div>
-                    <select class="w-full max-w-xs select select-warning select-sm" v-model="item.picture">
-                        <option v-if="item.picture.id" :value="{ id: '', name: '', url: '' }">❌</option>
+                    <select class="w-full max-w-xs select select-bordered select-sm" v-model="item.picture">
                         <option disabled selected>选择一张图片</option>
-                        <option v-for="picItem in localImageList" :key="picItem.id" :value="picItem">{{ picItem.name }}
+                      <option v-if="item.picture.id" :value="{ id: '', name: '', url: '' }">无</option>
+                      <option v-for="picItem in localImageList" :key="picItem.id" :value="picItem">{{ picItem.name }}
                         </option>
                     </select>
                 </label>

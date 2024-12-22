@@ -112,7 +112,7 @@ export const configRoutes={
   }
 const routes = [
   {
-    path: '/log-lottery',
+    path: '/log-lottery/',
     component: Layout,
     redirect: '/log-lottery/home',
     children: [
@@ -120,11 +120,6 @@ const routes = [
         path: '/log-lottery/home',
         name: 'Home',
         component: Home,
-      },
-      {
-        path:'/log-lottery/demo',
-        name:'Demo',
-        component:()=>import('@/views/Demo/index.vue')
       },
       configRoutes,
     ],

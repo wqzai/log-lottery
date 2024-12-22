@@ -18,7 +18,7 @@ const { getAlreadyPersonList: alreadyPersonList, getAlreadyPersonDetail: already
 //     personConfig.deleteAllPerson()
 // }
 
-const isDetail = ref(false)
+const isDetail = ref(true)
 const handleMoveNotPerson = (row: IPersonConfig) => {
     personConfig.moveAlreadyToNot(row)
 }

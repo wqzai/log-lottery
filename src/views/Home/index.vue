@@ -95,6 +95,7 @@ function initTableData() {
     }
     tableData.value = filterData(tableData.value.slice(0, totalCount), rowCount.value)
 }
+
 const init = () => {
     const felidView = 40;
     const width = window.innerWidth;
@@ -111,7 +112,7 @@ const init = () => {
     renderer.value.setSize(width, height * 0.9)
     renderer.value.domElement.style.position = 'absolute';
     // 垂直居中
-    renderer.value.domElement.style.paddingTop = '50px'
+    renderer.value.domElement.style.paddingTop = '40px'
     renderer.value.domElement.style.top = '50%';
     renderer.value.domElement.style.left = '50%';
     renderer.value.domElement.style.transform = 'translate(-50%, -50%)';
@@ -141,7 +142,7 @@ const init = () => {
 
         const detail = document.createElement('div');
         detail.className = 'card-detail';
-        detail.innerHTML = `${tableData.value[i].department}<br/>${tableData.value[i].identity}`;
+        detail.innerHTML = `${tableData.value[i].department.replace(/ - /g, '1')}<br/>${tableData.value[i].identity}`;
         element.appendChild(detail);
 
         element = useElementStyle(element, tableData.value[i], i, patternList.value, patternColor.value, cardColor.value, cardSize.value, textSize.value)
@@ -388,7 +389,7 @@ const startLottery = () => {
     // 验证是否已抽完全部奖项
     if (currentPrize.value.isUsed || !currentPrize.value) {
         toast.open({
-            message: '抽奖抽完了',
+            message: '奖品抽完了',
             type: 'warning',
             position: 'top-right',
             duration: 10000
@@ -430,8 +431,8 @@ const startLottery = () => {
         }
     }
     toast.open({
-        message: `现在抽取${currentPrize.value.name} ${leftover}人`,
-        type: 'default',
+        message: `准备抽取${currentPrize.value.name} ${leftover}人`,
+        type: 'success',
         position: 'top-right',
         duration: 8000
     })
@@ -569,11 +570,11 @@ const centerFire = (particleRatio: number, opts: any) => {
     });
 }
 
-const setDefaultPersonList = () => {
-    personConfig.setDefaultPersonList()
-    // 刷新页面
-    window.location.reload()
-}
+// const setDefaultPersonList = () => {
+//     personConfig.setDefaultPersonList()
+//     // 刷新页面
+//     window.location.reload()
+// }
 // 随机替换数据
 const randomBallData = (mod: 'default' | 'lucky' | 'sphere' = 'default') => {
     // 两秒执行一次
@@ -645,23 +646,32 @@ onUnmounted(() => {
 </script>
 
 <template>
-    <div class="absolute z-10 flex flex-col items-center justify-center -translate-x-1/2 left-1/2">
-        <h2 class="pt-12 m-0 mb-12 font-mono tracking-wide text-center leading-12 header-title"
-            :style="{ fontSize: textSize * 1.5 + 'px', color: textColor }">{{ topTitle }}</h2>
+    <div class="absolute z-10 flex flex-col items-center justify-center -translate-x-1/2 left-1/2 -top-7">
+        <h2 class="font-mono tracking-wide text-center leading-12 header-title"
+            :style="{ fontSize: textSize * 2 + 'px', color: textColor }">{{ topTitle }}</h2>
         <div class="flex gap-3">
-            <button v-if="tableData.length <= 0" class="cursor-pointer btn btn-outline btn-secondary btn-lg"
+            <button v-if="tableData.length <= 0" class="cursor-pointer btn btn-outline  btn-lg" style="background-color: red; color: white"
                 @click="router.push('config')">暂无人员信息，前往导入</button>
-            <button v-if="tableData.length <= 0" class="cursor-pointer btn btn-outline btn-secondary btn-lg"
-                @click="setDefaultPersonList">使用默认数据</button>
+<!--            <button v-if="tableData.length <= 0" class="cursor-pointer btn btn-outline btn-secondary btn-lg"-->
+<!--                @click="setDefaultPersonList">使用默认数据</button>-->
         </div>
     </div>
     <div id="container" ref="containerRef" class="3dContainer">
 
         <!-- 选中菜单结构 start-->
         <div id="menu">
-            <button class="btn-end " @click="enterLottery"
-                v-if="currentStatus == 0 && tableData.length > 0">进入抽奖</button>
+            <div class="start" v-if="currentStatus == 0 && tableData.length > 0">
+               <button class="btn-start" @click="enterLottery"><strong>进入抽奖</strong>
+                      <div id="container-stars">
+                          <div id="stars"></div>
+                      </div>
 
+                      <div id="glow">
+                          <div class="circle"></div>
+                          <div class="circle"></div>
+                      </div>
+                  </button>
+            </div>
             <div class="start" v-if="currentStatus == 1">
                 <button class="btn-start" @click="startLottery"><strong>开始</strong>
                     <div id="container-stars">
@@ -674,9 +684,18 @@ onUnmounted(() => {
                     </div>
                 </button>
             </div>
+            <div class="start" v-if="currentStatus == 2">
+               <button class="btn-start" @click="stopLottery"><strong>抽取幸运儿</strong>
+                      <div id="container-stars">
+                          <div id="stars"></div>
+                      </div>
 
-            <button class="btn-end btn glass btn-lg" @click="stopLottery" v-if="currentStatus == 2">抽取幸运儿</button>
-
+                      <div id="glow">
+                          <div class="circle"></div>
+                          <div class="circle"></div>
+                      </div>
+                  </button>
+            </div>
             <div v-if="currentStatus == 3" class="flex justify-center gap-6 enStop">
                 <div class="start">
                     <button class="btn-start" @click="continueLottery"><strong>继续！</strong>
@@ -712,8 +731,8 @@ onUnmounted(() => {
     </div>
     <StarsBackground :home-background="homeBackground"></StarsBackground>
 
-    <!-- <LuckyView :luckyPersonList="luckyTargets"  ref="LuckyViewRef"></LuckyView> -->
-    <!-- <PlayMusic class="absolute right-0 bottom-1/2"></PlayMusic> -->
+<!--     <LuckyView :luckyPersonList="luckyTargets"  ref="LuckyViewRef"></LuckyView> -->
+<!--     <PlayMusic class="absolute right-0 bottom-1/2"></PlayMusic> -->
     <PrizeList class="absolute left-0 top-32"></PrizeList>
 </template>
 
@@ -722,19 +741,20 @@ onUnmounted(() => {
     position: absolute;
     z-index: 100;
     width: 100%;
-    bottom: 50px;
+    bottom: 30px;
     text-align: center;
     margin: 0 auto;
     font-size: 32px;
 }
 
 .header-title {
+    width: max-content;
+    margin-left: 50px;
     -webkit-animation: tracking-in-expand-fwd 0.8s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
     animation: tracking-in-expand-fwd 0.8s cubic-bezier(0.215, 0.610, 0.355, 1.000) both;
 }
 
 .start {
-    // 居中
     display: flex;
     justify-content: center;
 }
@@ -751,7 +771,6 @@ onUnmounted(() => {
     backdrop-filter: blur(1rem);
     border-radius: 5rem;
     transition: 0.5s;
-    animation: gradient_301 5s ease infinite;
     border: double 4px transparent;
     background-image: linear-gradient(#212121, #212121), linear-gradient(137.48deg, #ffdb3b 10%, #FE53BB 45%, #8F51EA 67%, #0044ff 87%);
     background-origin: border-box;
@@ -821,24 +840,8 @@ strong {
     background: rgba(142, 81, 234, 0.704);
 }
 
-.btn-start:hover #container-stars {
-    z-index: 1;
-    background-color: #212121;
-}
-
 .btn-start:hover {
     transform: scale(1.1)
-}
-
-.btn-start:active {
-    border: double 4px #FE53BB;
-    background-origin: border-box;
-    background-clip: content-box, border-box;
-    animation: none;
-}
-
-.btn-start:active .circle {
-    background: #FE53BB;
 }
 
 #stars {

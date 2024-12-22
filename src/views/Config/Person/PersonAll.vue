@@ -62,7 +62,7 @@ const exportData = () => {
         const dataBinary = XLSX.utils.json_to_sheet(data)
         const dataBinaryBinary = XLSX.utils.book_new()
         XLSX.utils.book_append_sheet(dataBinaryBinary, dataBinary, 'Sheet1')
-        XLSX.writeFile(dataBinaryBinary, 'data.xlsx')
+        XLSX.writeFile(dataBinaryBinary, '中奖详情.xlsx')
     }
 }
 
@@ -160,8 +160,8 @@ onMounted(() => {
         <div class="flex gap-3">
             <button class="btn btn-error btn-sm" @click="delAllDataDialog.showModal()">全部删除</button>
             <div class="tooltip tooltip-bottom" data-tip="下载文件后，请在excel中填写数据，并保存为xlsx格式">
-                <a class="no-underline btn btn-secondary btn-sm" download="人口登记表.xlsx" target="_blank"
-                    href="/log-lottery/人口登记表.xlsx">下载模板</a>
+                <a class="no-underline btn btn-secondary btn-sm" download="人员登记表.xlsx" target="_blank"
+                    href="/log-lottery/人员登记表.xlsx">下载模板</a>
             </div>
             <div class="">
                 <label for="explore">

@@ -54,6 +54,18 @@ const removeImage=(item:IImage)=>{
     }
     globalConfig.removeImage(item.id)
 }
+
+const resetImage = () => {
+    globalConfig.resetImageList()
+    globalConfig.setBackground({ name: '无', url: '', id: '' })
+    imageDbStore.clear()
+}
+
+const deleteAll = () => {
+    globalConfig.clearImageList()
+    imageDbStore.clear()
+}
+
 onMounted(() => {
     // getImageDbStore()
 })
@@ -80,12 +92,14 @@ watch(() => imgUploadToast.value, (val) => {
     </div>
 
     <div>
-        <div class="">
+        <div class="pt-7">
+            <button class="btn btn-primary btn-sm" @click="resetImage">重置图片列表</button>
             <label for="explore">
                 <input type="file" class="" id="explore" style="display: none" @change="handleFileChange"
                     :accept="limitType" />
-                <span class="btn btn-primary btn-sm">上传图片</span>
+                <span class="btn btn-primary btn-sm mr-3 ml-3">上传图片</span>
             </label>
+            <button class="btn btn-error btn-sm" @click="deleteAll">删除所有</button>
         </div>
         <ul class="p-0">
             <li v-for="item in localImageList" :key="item.id" class="mb-3">

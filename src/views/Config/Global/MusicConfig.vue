@@ -73,7 +73,7 @@ onMounted(() => {
 
 <template>
     <div>
-        <div class="flex gap-3">
+        <div class="flex gap-3 pt-2">
             <button class="btn btn-primary btn-sm" @click="resetMusic">重置音乐列表</button>
             <label for="explore">
                 <input type="file" class="" id="explore" style="display: none" @change="handleFileChange"

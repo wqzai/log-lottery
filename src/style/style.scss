@@ -5,7 +5,8 @@
     .card-id {
         position: absolute;
         top: 20px;
-        right: 20px;
+        right: 0;
+        left: 0;
     }
 
     .card-name {
@@ -37,15 +38,16 @@
 
     .card-id {
         position: absolute;
-        top: 20px;
-        right: 20px;
+        top: 40px;
+        right: 0;
+        left: 0;
     }
 
     .card-name {
         position: absolute;
-        top: 40px;
-        left: 0px;
-        right: 0;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
         font-weight: bold;
         white-space: nowrap;
         overflow: hidden;
@@ -59,6 +61,6 @@
         position: absolute;
         left: 0;
         right: 0;
-        bottom: 15px;
+        bottom: 30px;
     }
 }

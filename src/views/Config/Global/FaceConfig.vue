@@ -154,6 +154,9 @@ watch(textColorValue, (val: string) => {
 watch(cardSizeValue, (val: { width: number; height: number; }) => {
     globalConfig.setCardSize(val)
 }, { deep: true }),
+watch(textSizeValue, (val: number) => {
+    globalConfig.setTextSize(val)
+})
     watch(isShowPrizeListValue, () => {
         globalConfig.setIsShowPrizeList(isShowPrizeListValue.value)
     })
@@ -215,34 +218,38 @@ onMounted(() => {
                 </div>
             </div>
         </label>
-        <label class="w-full max-w-xs form-control">
+        <label class="w-full max-w-xs form-control mb-10">
             <div class="label">
                 <span class="label-text">选择主题</span>
             </div>
-            <select data-choose-theme class="w-full max-w-xs border-solid select border-1" v-model="themeValue">
+            <select data-choose-theme class="w-full max-w-xs border-solid select select-bordered border-1" v-model="themeValue">
                 <option disabled selected>选取主题</option>
                 <option v-for="(item, index) in themeList" :key="index" :value="item">{{ item }}</option>
             </select>
         </label>
-        <label class="w-full max-w-xs form-control">
+        <label class="w-full max-w-xs form-control mb-10">
             <div class="label">
                 <span class="label-text">选择背景图片</span>
             </div>
-            <select data-choose-theme class="w-full max-w-xs border-solid select border-1"
+            <select data-choose-theme class="w-full max-w-xs border-solid select select-bordered border-1"
                 v-model="backgroundImageValue">
                 <option disabled selected>选取背景图片</option>
                 <option v-for="(item, index) in [{ name: '无', url: '', id: '' }, ...imageList]" :key="index"
                     :value="item">{{ item.name }}</option>
             </select>
+          <div style="width: 300px; margin-top: 10px;" v-if="backgroundImageValue.url !== ''">
+            <ImageSync :key="backgroundImageValue.id" :imgItem="backgroundImageValue"
+                       style="width: 100%"></ImageSync>
+          </div>
         </label>
-        <label class="w-full max-w-xs form-control">
+        <label class="w-full max-w-xs form-control mb-10">
             <div class="label">
                 <span class="label-text">卡片颜色</span>
             </div>
             <ColorPicker ref="colorPickerRef" v-model="cardColorValue" v-model:pure-color="cardColorValue">
             </ColorPicker>
         </label>
-        <label class="w-full max-w-xs form-control">
+        <label class="w-full max-w-xs form-control mb-10">
             <div class="label">
                 <span class="label-text">中奖卡片颜色</span>
             </div>
@@ -250,7 +257,7 @@ onMounted(() => {
             </ColorPicker>
         </label>
 
-        <label class="w-full max-w-xs form-control">
+        <label class="w-full max-w-xs form-control mb-10">
             <div class="label">
                 <span class="label-text">文字颜色</span>
             </div>
@@ -280,14 +287,14 @@ onMounted(() => {
             <input type="number" v-model="textSizeValue" placeholder="Type here"
                 class="w-full max-w-xs input input-bordered" />
         </label>
-        <label class="w-full max-w-xs form-control">
+        <label class="w-full max-w-xs form-control mb-10">
             <div class="label">
                 <span class="label-text">高亮颜色</span>
             </div>
             <ColorPicker ref="colorPickerRef" v-model="patternColorValue" v-model:pure-color="patternColorValue">
             </ColorPicker>
         </label>
-        <label class="flex flex-row items-center w-full gap-24 mb-0 form-control">
+        <label class="flex flex-row items-center w-full gap-24 mb-10 form-control">
             <div>
                 <div class="label">
                     <span class="label-text">图案设置</span>
