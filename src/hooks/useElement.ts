@@ -46,7 +46,7 @@ export const useElementStyle = (element: any, person: IPersonConfig, index: numb
 
     element.children[2].style.fontSize = textSize * 0.5 + 'px'
     if (person.department || person.identity) {
-        element.children[2].innerHTML = `${person.department ? person.department : ''}<br/>${person.identity ? person.identity : ''}`
+        element.children[2].innerHTML = `${person.department ? person.department.replace(/ - /g, '<br/>') : ''}<br/>${person.identity ? person.identity : ''}`
     }
 
     return element

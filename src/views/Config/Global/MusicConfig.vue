@@ -38,9 +38,9 @@ const deleteAll = () => {
 const getMusicDbStore = async () => {
     const keys = await audioDbStore.keys()
     if (keys.length > 0) {
-        audioDbStore.iterate((value: string, key: string) => {
+        await audioDbStore.iterate((value: string, key: string) => {
             globalConfig.addMusic({
-                id: key + new Date().getTime().toString(),
+                id: key,
                 name: key,
                 url: 'Storage',
             })
@@ -48,14 +48,32 @@ const getMusicDbStore = async () => {
     }
 }
 const handleFileChange = async (e: Event) => {
-    const isAudio = /audio*/.test(((e.target as HTMLInputElement).files as FileList)[0].type)
+    const files = (e.target as HTMLInputElement).files
+    if (!files) return
+
+    let isAudio = true
+    const filePromises = Array.from(files).map(async (file) => {
+        if (!/audio*/.test(file.type)) {
+            isAudio = false
+
+            return
+        }
+        try {
+            const { dataUrl, fileName } = await readFileData(file)
+
+            return audioDbStore.setItem(fileName, dataUrl)
+        } catch (error) {
+            return Promise.reject(error)
+        }
+    })
+
     if (!isAudio) {
         audioUploadToast.value = 3
 
         return
     }
-    let { dataUrl, fileName } = await readFileData(((e.target as HTMLInputElement).files as FileList)[0])
-    audioDbStore.setItem(new Date().getTime().toString() + '+' + fileName, dataUrl)
+
+    Promise.all(filePromises)
         .then(() => {
             audioUploadToast.value = 1
             getMusicDbStore()
@@ -77,7 +95,7 @@ onMounted(() => {
             <button class="btn btn-primary btn-sm" @click="resetMusic">重置音乐列表</button>
             <label for="explore">
                 <input type="file" class="" id="explore" style="display: none" @change="handleFileChange"
-                    :accept="limitType" />
+                    :accept="limitType" multiple />
                 <span class="btn btn-primary btn-sm">上传音乐</span>
             </label>
             <button class="btn btn-error btn-sm" @click="deleteAll">删除所有</button>

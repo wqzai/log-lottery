@@ -16,27 +16,36 @@ const imageDbStore = localforage.createInstance({
     name: 'imgStore'
 })
 const handleFileChange = async (e: Event) => {
-    const isImage= /image*/.test(((e.target as HTMLInputElement).files as FileList)[0].type)
-    if (!isImage) {
-        imgUploadToast.value = 3
+    const files = (e.target as HTMLInputElement).files as FileList
+    let isAnyImage = false
+    for (let i = 0; i < files.length; i++) {
+        const file = files[i]
+        const isImage = /image*/.test(file.type)
+        if (!isImage) {
+            imgUploadToast.value = 3
 
-        return
+            return
+        }
+        isAnyImage = true
+        let { dataUrl, fileName } = await readFileData(file)
+        imageDbStore.setItem(fileName, dataUrl)
+            .then(() => {
+                imgUploadToast.value = 1
+                getImageDbStore()
+            })
+            .catch(() => {
+                imgUploadToast.value = 2
+            })
     }
-    let { dataUrl, fileName } = await readFileData(((e.target as HTMLInputElement).files as FileList)[0])
-    imageDbStore.setItem(new Date().getTime().toString() + '+' + fileName, dataUrl)
-        .then(() => {
-            imgUploadToast.value = 1
-            getImageDbStore()
-        })
-        .catch(() => {
-            imgUploadToast.value = 2
-        })
+    if (!isAnyImage) {
+        imgUploadToast.value = 3
+    }
 }
 
 const getImageDbStore =async () => {
     const keys =await imageDbStore.keys()
     if(keys.length>0){
-        imageDbStore.iterate((value, key) => {
+        await imageDbStore.iterate((value, key) => {
             globalConfig.addImage({
                 id:key,
                 name:key,
@@ -96,7 +105,7 @@ watch(() => imgUploadToast.value, (val) => {
             <button class="btn btn-primary btn-sm" @click="resetImage">重置图片列表</button>
             <label for="explore">
                 <input type="file" class="" id="explore" style="display: none" @change="handleFileChange"
-                    :accept="limitType" />
+                    :accept="limitType" multiple/>
                 <span class="btn btn-primary btn-sm mr-3 ml-3">上传图片</span>
             </label>
             <button class="btn btn-error btn-sm" @click="deleteAll">删除所有</button>

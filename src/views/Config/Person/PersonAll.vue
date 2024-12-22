@@ -10,11 +10,10 @@ import { addOtherInfo } from '@/utils'
 import DaiysuiTable from '@/components/DaiysuiTable/index.vue'
 
 const personConfig = useStore().personConfig
-const { getAllPersonList: allPersonList, getAlreadyPersonList: alreadyPersonList } = storeToRefs(personConfig)
+const { getAllPersonList: allPersonList} = storeToRefs(personConfig)
 const limitType = '.xlsx,.xls'
 // const personList = ref<any[]>([])
 
-const resetDataDialog = ref()
 const delAllDataDialog = ref()
 
 const handleFileChange = async (e: Event) => {
@@ -25,49 +24,6 @@ const handleFileChange = async (e: Event) => {
     const allData = addOtherInfo(excelData);
     personConfig.resetPerson()
     personConfig.addNotPersonList(allData)
-}
-const exportData = () => {
-    let data = JSON.parse(JSON.stringify(allPersonList.value))
-    // 排除一些字段
-    for (let i = 0; i < data.length; i++) {
-        delete data[i].x
-        delete data[i].y
-        delete data[i].id
-        delete data[i].createTime
-        delete data[i].updateTime
-        delete data[i].prizeId
-        // 修改字段名称
-        if (data[i].isWin) {
-            data[i].isWin = '是'
-        } else {
-            data[i].isWin = '否'
-        }
-        // 格式化数组为
-        data[i].prizeTime = data[i].prizeTime.join(',')
-        data[i].prizeName = data[i].prizeName.join(',')
-    }
-    let dataString = JSON.stringify(data)
-    dataString = dataString
-        .replaceAll(/uid/g, '编号')
-        .replaceAll(/isWin/g, '是否中奖')
-        .replaceAll(/department/g, '部门')
-        .replaceAll(/name/g, '姓名')
-        .replaceAll(/identity/g, '身份')
-        .replaceAll(/prizeName/g, '获奖')
-        .replaceAll(/prizeTime/g, '获奖时间')
-
-    data = JSON.parse(dataString)
-
-    if (data.length > 0) {
-        const dataBinary = XLSX.utils.json_to_sheet(data)
-        const dataBinaryBinary = XLSX.utils.book_new()
-        XLSX.utils.book_append_sheet(dataBinaryBinary, dataBinary, 'Sheet1')
-        XLSX.writeFile(dataBinaryBinary, '中奖详情.xlsx')
-    }
-}
-
-const resetData = () => {
-    personConfig.resetAlreadyPerson()
 }
 
 const deleteAll = () => {
@@ -91,27 +47,20 @@ const tableColumns = [
         label: '部门',
         props: 'department',
     },
-    {
-        label: '身份',
-        props: 'identity',
-    },
-    {
-        label: '是否已中奖',
-        props: 'isWin',
-        formatValue(row: IPersonConfig) {
-            return row.isWin ? '是' : '否'
-        }
-    },
+    // {
+    //     label: '身份',
+    //     props: 'identity',
+    // },
+    // {
+    //     label: '是否已中奖',
+    //     props: 'isWin',
+    //     formatValue(row: IPersonConfig) {
+    //         return row.isWin ? '是' : '否'
+    //     }
+    // },
     {
         label: '操作',
         actions: [
-            // {
-            //     label: '编辑',
-            //     type: 'btn-info',
-            //     onClick: (row: any) => {
-            //         delPersonItem(row)
-            //     }
-            // },
             {
                 label: '删除',
                 type: 'btn-error',
@@ -119,7 +68,6 @@ const tableColumns = [
                     delPersonItem(row)
                 }
             },
-
         ]
     },
 ]
@@ -128,19 +76,6 @@ onMounted(() => {
 </script>
 
 <template>
-    <dialog id="my_modal_1" ref="resetDataDialog" class="border-none modal">
-        <div class="modal-box">
-            <h3 class="text-lg font-bold">提示!</h3>
-            <p class="py-4">该操作会清空人员中奖信息，是否继续？</p>
-            <div class="modal-action">
-                <form method="dialog" class="flex gap-3">
-                    <!-- if there is a button in form, it will close the modal -->
-                    <button class="btn" @click="resetDataDialog.close()">取消</button>
-                    <button class="btn" @click="resetData">确定</button>
-                </form>
-            </div>
-        </div>
-    </dialog>
     <dialog id="my_modal_1" ref="delAllDataDialog" class="border-none modal">
         <div class="modal-box">
             <h3 class="text-lg font-bold">提示!</h3>
@@ -173,16 +108,6 @@ onMounted(() => {
                         <span class="btn btn-primary btn-sm">导入人员数据</span>
                     </div>
                 </label>
-                <!-- <button class="btn btn-primary btn-sm">上传excel</button> -->
-
-            </div>
-            <button class="btn btn-error btn-sm" @click="resetDataDialog.showModal()">重置人员数据</button>
-            <button class="btn btn-accent btn-sm" @click="exportData">导出结果</button>
-            <div>
-                <span>中奖人数：</span>
-                <span>{{ alreadyPersonList.length }}</span>
-                <span>&nbsp;/&nbsp;</span>
-                <span>{{ allPersonList.length }}</span>
             </div>
         </div>
         <DaiysuiTable :tableColumns="tableColumns" :data="allPersonList"></DaiysuiTable>

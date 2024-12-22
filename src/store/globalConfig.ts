@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { defaultMusicList, defaultImageList, defaultPatternList } from './data'
 import { IMusic, IImage } from '@/types/storeType';
+import bg from '@/assets/images/bg.jpg'
 // import { IPrizeConfig } from '@/types/storeType';
 export const useGlobalConfig = defineStore('global', {
     state() {
@@ -12,18 +13,18 @@ export const useGlobalConfig = defineStore('global', {
                 theme: {
                     name: 'dracula',
                     detail: { primary: '#0f5fd3' },
-                    cardColor: '#ff79c6',
+                    cardColor: '#dd300e',
                     cardWidth: 140,
                     cardHeight: 200,
-                    textColor: '#ffcc80',
-                    luckyCardColor: '#d81b43',
+                    textColor: '#ffe608',
+                    luckyCardColor: '#ff0f03',
                     textSize: 30,
-                    patternColor: '#fff59c',
+                    patternColor: '#ffe608',
                     patternList: defaultPatternList as number[],
                     background: {
                         id: '3',
-                        name: '背景图片',
-                        url: 'https://img.cdn.apipost.cn/upload/user/0/file/2e18d92d-d129-459a-88a7-d71ae96486a8.jpg'
+                        name: '背景图片.png',
+                        url: bg
                     }
                 },
                 musicList: defaultMusicList as IMusic[],
@@ -229,18 +230,18 @@ export const useGlobalConfig = defineStore('global', {
                 theme: {
                     name: 'dracula',
                     detail: { primary: '#0f5fd3' },
-                    cardColor: '#ff79c6',
+                    cardColor: '#dd300e',
                     cardWidth: 140,
                     cardHeight: 200,
-                    textColor: '#ffcc80',
-                    luckyCardColor: '#d81b43',
+                    textColor: '#ffe608',
+                    luckyCardColor: '#ff0f03',
                     textSize: 30,
-                    patternColor: '#fff59c',
+                    patternColor: '#ffe608',
                     patternList: defaultPatternList as number[],
                     background: {
                         id: '3',
-                        name: '背景图片',
-                        url: 'https://img.cdn.apipost.cn/upload/user/0/file/2e18d92d-d129-459a-88a7-d71ae96486a8.jpg'
+                        name: '背景图片.png',
+                        url: bg
                     }
                 },
                 musicList: defaultMusicList as IMusic[],

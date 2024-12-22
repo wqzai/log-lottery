@@ -142,7 +142,7 @@ const init = () => {
 
         const detail = document.createElement('div');
         detail.className = 'card-detail';
-        detail.innerHTML = `${tableData.value[i].department.replace(/ - /g, '1')}<br/>${tableData.value[i].identity}`;
+        detail.innerHTML = `${tableData.value[i].department.replace(/ - /g, '<br/>')}<br/>${tableData.value[i].identity}`;
         element.appendChild(detail);
 
         element = useElementStyle(element, tableData.value[i], i, patternList.value, patternColor.value, cardColor.value, cardSize.value, textSize.value)
@@ -431,7 +431,7 @@ const startLottery = () => {
         }
     }
     toast.open({
-        message: `准备抽取${currentPrize.value.name} ${leftover}人`,
+        message: `准备抽取${currentPrize.value.name} ${leftover} 人`,
         type: 'success',
         position: 'top-right',
         duration: 8000

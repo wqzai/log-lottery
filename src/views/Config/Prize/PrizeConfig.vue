@@ -29,7 +29,7 @@ const addPrize = () => {
         isUsedCount: 0,
         picture: {
             id: '',
-            name: '',
+            name: '默认',
             url: ''
         },
         separateCount: {
@@ -217,8 +217,8 @@ watch(() => prizeList.value, (val: IPrizeConfig[]) => {
                         <span class="label-text">图片</span>
                     </div>
                     <select class="w-full max-w-xs select select-bordered select-sm" v-model="item.picture">
-                        <option disabled selected>选择一张图片</option>
-                      <option v-if="item.picture.id" :value="{ id: '', name: '', url: '' }">无</option>
+                        <option disabled selected>选择奖品图片</option>
+                      <option v-if="item.picture.name" :value="{ id: '', name: '默认', url: '' }">默认</option>
                       <option v-for="picItem in localImageList" :key="picItem.id" :value="picItem">{{ picItem.name }}
                         </option>
                     </select>

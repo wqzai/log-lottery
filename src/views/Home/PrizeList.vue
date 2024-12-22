@@ -4,8 +4,7 @@ import { storeToRefs } from 'pinia'
 import useStore from '@/store'
 
 import ImageSync from '@/components/ImageSync/index.vue'
-// import defaultPrizeImage from '@/assets/images/龙.png'
-import defaultPrizeImage from '../../../public/luck.svg'
+import defaultPrizeImage from '@/assets/images/luck.svg'
 import { IPrizeConfig } from '../../types/storeType';
 
 import EditSeparateDialog from '@/components/NumberSeparate/EditSeparateDialog.vue'
@@ -150,10 +149,9 @@ onMounted(() => {
                         <div class="label">
                             <span class="label-text">图片</span>
                         </div>
-                        <select class="flex-1 w-12 select select-warning select-sm" v-model="temporaryPrize.picture">
-                            <option v-if="temporaryPrize.picture.id" :value="{ id: '', name: '', url: '' }">❌
-                            </option>
-                            <option disabled selected>选择一张图片</option>
+                        <select class="flex-1 w-12 select select-bordered select-sm" v-model="temporaryPrize.picture">
+                          <option disabled selected>选择奖品图片</option>
+                          <option v-if="temporaryPrize.picture.name" :value="{ id: '', name: '默认', url: '' }">默认</option>
                             <option class="w-auto" v-for="picItem in localImageList" :key="picItem.id" :value="picItem">{{
                                 picItem.name }}
                             </option>

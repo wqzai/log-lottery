@@ -8,7 +8,7 @@ import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import Icons from 'unplugin-icons/vite';
 import IconsResolver from 'unplugin-icons/resolver';
-import { visualizer } from 'rollup-plugin-visualizer';
+// import { visualizer } from 'rollup-plugin-visualizer';
 import viteCompression from 'vite-plugin-compression';
 // import vueDevTools from 'vite-plugin-vue-devtools'
 // https://vitejs.dev/config/
@@ -21,20 +21,20 @@ export default defineConfig(({ mode }) => {
         plugins: [
             vue(),
             // vueDevTools(),
-            viteCompression({
-                verbose: true,
-                disable: false,
-                threshold: 10240,
-                algorithm: 'gzip',
-                ext: '.gz',
-            }),
-            visualizer({
-                emitFile: true, //是否被触摸
-                filename: 'test.html', //生成分析网页文件名
-                open: true, //在默认用户代理中打开生成的文件
-                gzipSize: true, //从源代码中收集 gzip 大小并将其显示在图表中
-                brotliSize: true, //从源代码中收集 brotli 大小并将其显示在图表中
-            }),
+            // viteCompression({
+            //     verbose: true,
+            //     disable: false,
+            //     threshold: 10240,
+            //     algorithm: 'gzip',
+            //     ext: '.gz',
+            // }),
+            // visualizer({
+            //     emitFile: true, //是否被触摸
+            //     filename: 'test.html', //生成分析网页文件名
+            //     open: true, //在默认用户代理中打开生成的文件
+            //     gzipSize: true, //从源代码中收集 gzip 大小并将其显示在图表中
+            //     brotliSize: true, //从源代码中收集 brotli 大小并将其显示在图表中
+            // }),
 
             createSvgIconsPlugin({
                 // 指定需要缓存的图标文件夹
@@ -112,7 +112,10 @@ export default defineConfig(({ mode }) => {
                 output: {
                     chunkFileNames: `js/${chunkName}-[hash].js`, // 引入文件名的名称
                     entryFileNames: `js/${chunkName}-[hash].js`, // 包的入口文件名称
-                    assetFileNames: `[ext]/${chunkName}-[hash].[ext]`, // 资源文件像 字体，图片等
+                    assetFileNames: ({name, type, source}) => {
+                      if (type === 'asset' && name && name.endsWith(".css")) return `css/${chunkName}-[hash].css`
+                      return `data/[name]-[hash].[ext]`
+                    }, // 资源文件像 字体，图片等
                     manualChunks(id: any): string {
                         if (id.includes('node_modules')) {
                             return id

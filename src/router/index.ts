@@ -37,7 +37,7 @@ export const configRoutes={
                 name:'AlreadyPerson',
                 component:()=>import('@/views/Config/Person/PersonAlready.vue'),
                 meta:{
-                    title:'中奖名单人员',
+                    title:'中奖人员',
                     icon:'already'
                 }
             },

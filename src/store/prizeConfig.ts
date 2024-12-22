@@ -16,7 +16,7 @@ export const usePrizeConfig = defineStore('prize', {
                     isUsedCount: 0,
                     picture: {
                         id: '-1',
-                        name: '',
+                        name: '默认',
                         url: ''
                     },
                     separateCount: {
@@ -121,7 +121,7 @@ export const usePrizeConfig = defineStore('prize', {
                 isUsedCount: 0,
                 picture: {
                     id: '-1',
-                    name: '',
+                    name: '默认',
                     url: ''
                 },
                 separateCount: {
@@ -148,7 +148,7 @@ export const usePrizeConfig = defineStore('prize', {
                     isUsedCount: 0,
                     picture: {
                         id: '-1',
-                        name: '',
+                        name: '默认',
                         url: ''
                     },
                     separateCount: {

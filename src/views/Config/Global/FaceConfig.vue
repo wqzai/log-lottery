@@ -306,11 +306,11 @@ onMounted(() => {
             </div>
         </label>
         <div class="flex w-full h-24 gap-3 m-0">
-            <button class="mt-5 btn btn-info btn-sm" @click.stop="clearPattern">
+            <button class="btn btn-info btn-sm" @click.stop="clearPattern">
                 <span>清空图案设置</span>
             </button>
             <div class="tooltip" data-tip="默认图案设置针对17列时有效，其他列数请自行设置">
-                <button class="mt-5 btn btn-info btn-sm" @click="resetPattern">
+                <button class="btn btn-info btn-sm" @click="resetPattern">
                     <span>默认图案设置</span>
                 </button>
             </div>
