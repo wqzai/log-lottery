@@ -152,9 +152,9 @@ onMounted(() => {
                         <select class="flex-1 w-12 select select-bordered select-sm" v-model="temporaryPrize.picture">
                           <option disabled selected>选择奖品图片</option>
                           <option v-if="temporaryPrize.picture.name" :value="{ id: '', name: '默认', url: '' }">默认</option>
-                            <option class="w-auto" v-for="picItem in localImageList" :key="picItem.id" :value="picItem">{{
-                                picItem.name }}
-                            </option>
+                          <option class="w-auto" v-for="picItem in localImageList" :key="picItem.id" :value="picItem">{{
+                              picItem.name }}
+                          </option>
                         </select>
                     </label>
                 </div>
@@ -174,7 +174,7 @@ onMounted(() => {
                     <div v-if="temporaryPrize.isUsed"
                         class="absolute z-50 w-full h-full bg-gray-800/70 item-mask rounded-xl"></div>
                     <figure class="w-10 h-10 rounded-xl">
-                        <ImageSync v-if="temporaryPrize.picture.url" :imgItem="temporaryPrize.picture"></ImageSync>
+                        <ImageSync v-if="temporaryPrize.picture.url" :imgItem="temporaryPrize.picture" :key="temporaryPrize.picture.id"></ImageSync>
                         <img v-else :src="defaultPrizeImage" alt="Prize" class="object-cover h-full rounded-xl" />
                     </figure>
                     <div class="items-center p-0 text-center card-body">

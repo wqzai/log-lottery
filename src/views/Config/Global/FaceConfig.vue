@@ -234,10 +234,10 @@ onMounted(() => {
             <select data-choose-theme class="w-full max-w-xs border-solid select select-bordered border-1"
                 v-model="backgroundImageValue">
                 <option disabled selected>选取背景图片</option>
-                <option v-for="(item, index) in [{ name: '无', url: '', id: '' }, ...imageList]" :key="index"
+                <option v-for="(item, index) in [{ name: '默认', url: '', id: '' }, ...imageList]" :key="index"
                     :value="item">{{ item.name }}</option>
             </select>
-          <div style="width: 300px; margin-top: 10px;" v-if="backgroundImageValue.url !== ''">
+          <div style="width: 300px; margin-top: 15px;" v-if="backgroundImageValue.url !== ''">
             <ImageSync :key="backgroundImageValue.id" :imgItem="backgroundImageValue"
                        style="width: 100%"></ImageSync>
           </div>
@@ -294,7 +294,7 @@ onMounted(() => {
             <ColorPicker ref="colorPickerRef" v-model="patternColorValue" v-model:pure-color="patternColorValue">
             </ColorPicker>
         </label>
-        <label class="flex flex-row items-center w-full gap-24 mb-10 form-control">
+        <label class="flex flex-row items-center w-full gap-24 mb-3 form-control">
             <div>
                 <div class="label">
                     <span class="label-text">图案设置</span>
@@ -305,7 +305,7 @@ onMounted(() => {
                 </div>
             </div>
         </label>
-        <div class="flex w-full h-24 gap-3 m-0">
+        <div class="flex w-full gap-3 mb-10">
             <button class="btn btn-info btn-sm" @click.stop="clearPattern">
                 <span>清空图案设置</span>
             </button>
