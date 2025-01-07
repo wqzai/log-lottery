@@ -2,16 +2,16 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Layout from '@/layout/index.vue';
 import Home from '@/views/Home/index.vue';
 export const configRoutes={
-    path: '/log-lottery/config',
+    path: '/luck-lottery/config',
     name: 'Config',
     component: () => import('@/views/Config/index.vue'),
     children: [
         {
         path: '',
-        redirect: '/log-lottery/config/person',
+        redirect: '/luck-lottery/config/person',
       },
       {
-        path: '/log-lottery/config/person',
+        path: '/luck-lottery/config/person',
         name: 'PersonConfig',
         component: () => import('@/views/Config/Person/PersonConfig.vue'),
         meta: {
@@ -21,10 +21,10 @@ export const configRoutes={
         children:[
             {
                 path:'',
-                redirect: '/log-lottery/config/person/all',
+                redirect: '/luck-lottery/config/person/all',
             },
             {
-                path:'/log-lottery/config/person/all',
+                path:'/luck-lottery/config/person/all',
                 name:'AllPersonConfig',
                 component:()=>import('@/views/Config/Person/PersonAll.vue'),
                 meta:{
@@ -33,7 +33,7 @@ export const configRoutes={
                 }
             },
             {
-                path:'/log-lottery/config/person/already',
+                path:'/luck-lottery/config/person/already',
                 name:'AlreadyPerson',
                 component:()=>import('@/views/Config/Person/PersonAlready.vue'),
                 meta:{
@@ -53,7 +53,7 @@ export const configRoutes={
         ]
       },
       {
-        path: '/log-lottery/config/prize',
+        path: '/luck-lottery/config/prize',
         name: 'PrizeConfig',
         component: () => import('@/views/Config/Prize/PrizeConfig.vue'),
         meta:{
@@ -62,16 +62,16 @@ export const configRoutes={
         }
       },
       {
-        path:'/log-lottery/config/global',
+        path:'/luck-lottery/config/global',
         name:'GlobalConfig',
-        redirect: '/log-lottery/config/global/all',
+        redirect: '/luck-lottery/config/global/all',
         meta:{
             title:'全局配置',
             icon:'global'
         },
         children:[
             {
-                path:'/log-lottery/config/global/face',
+                path:'/luck-lottery/config/global/face',
                 name:'FaceConfig',
                 component:()=>import('@/views/Config/Global/FaceConfig.vue'),
                 meta:{
@@ -80,7 +80,7 @@ export const configRoutes={
                 }
             },
             {
-                path:'/log-lottery/config/global/image',
+                path:'/luck-lottery/config/global/image',
                 name:'ImageConfig',
                 component:()=>import('@/views/Config/Global/ImageConfig.vue'),
                 meta:{
@@ -89,7 +89,7 @@ export const configRoutes={
                 }
             },
             {
-                path:'/log-lottery/config/global/music',
+                path:'/luck-lottery/config/global/music',
                 name:'MusicConfig',
                 component:()=>import('@/views/Config/Global/MusicConfig.vue'),
                 meta:{
@@ -100,7 +100,7 @@ export const configRoutes={
         ]
       },
       {
-        path: '/log-lottery/config/readme',
+        path: '/luck-lottery/config/readme',
         name: 'Readme',
         component: () => import('@/views/Config/Readme/index.vue'),
         meta:{
@@ -112,12 +112,12 @@ export const configRoutes={
   }
 const routes = [
   {
-    path: '/log-lottery/',
+    path: '/luck-lottery/',
     component: Layout,
-    redirect: '/log-lottery/home',
+    redirect: '/luck-lottery/home',
     children: [
       {
-        path: '/log-lottery/home',
+        path: '/luck-lottery/home',
         name: 'Home',
         component: Home,
       },
